@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="All Test Suite">
-    <test verbose="2" preserve-order="true" name="/Users/kroy0002/Desktop/Qa/demo/projects/java-web-testing">
-        <classes/>
+<suite name="kt-suite-groups-testng">
+    <test verbose="2" preserve-order="true" name="kt-suite-groups-testng">
+        <groups>
+            <run>
+                <include name="Regression"/>
+                <exclude name="Smoke"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="kt.Test1"/>
+        </classes>
     </test>
 </suite>
