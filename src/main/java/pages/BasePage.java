@@ -1,40 +1,45 @@
 package pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeSuite;
+import utils.DriverManager;
+import java.util.logging.Logger;
 
 public class BasePage {
-    WebDriver driver;
-    String pageUrl = "https://opensource-demo.orangehrmlive.com/";
+    protected WebDriver driver;
+    protected WebElement pageRefObject;
+    LoginPage loginPage;
+    String baseUrl = "https://opensource-demo.orangehrmlive.com/";
 
-    public WebElement userNameFieldSelector = driver.findElement(By.xpath("//*[@id='app']/div[1]/div/div[1]/div/div[2]/div[2]/form/div[1]/div/div[2]/input"));
-    public WebElement passwordFieldSelector = driver.findElement(By.xpath("//*[@id='app']/div[1]/div/div[1]/div/div[2]/div[2]/form/div[2]/div/div[2]/input"));
+    private static final Logger logger = Logger.getLogger(BasePage.class.getName());
 
-    public void enterUserName(){
-        userNameFieldSelector.sendKeys("Admin");
-    }
-    public void enterPassword(){
-        passwordFieldSelector.sendKeys("admin123");
+    public BasePage(WebDriver driver) {
+        this.driver = driver;
     }
 
-    @BeforeClass(alwaysRun = true)
-    public void beforeClass() throws InterruptedException {
-        driver = new ChromeDriver();
-        driver.get(pageUrl);
-        Thread.sleep(10000);
-        enterUserName();
-        Thread.sleep(5000);
-        enterPassword();
-        Thread.sleep(5000);
+    @BeforeSuite
+    public void beforeSuite() {
+        loginPage = new LoginPage(DriverManager.getDriver());
+        DriverManager.getDriver().get(baseUrl);
+        loginPage.enterUserName();
+        loginPage.enterPassword();
+        loginPage.clickLogin();
     }
 
-    @AfterClass(alwaysRun = true)
-    public void afterClass(){
-        driver.quit();
+    @AfterSuite
+    public void afterSuite() {
+        DriverManager.quitDriver();
     }
 
+    public boolean isValid() {
+        WebElement element = pageRefObject;
+        try {
+            return (element != null && element.isDisplayed());
+        } catch (Exception e) {
+            logger.severe("Error while checking element validity: " + e.getMessage());
+            return false;
+        }
+    }
 }
