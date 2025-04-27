@@ -4,12 +4,14 @@
     <test verbose="2" preserve-order="true" name="kt-suite-groups-testng">
         <groups>
             <run>
-                <include name="Regression"/>
-                <exclude name="Smoke"/>
+                <include name="Shakeout"/>
             </run>
         </groups>
         <classes>
-            <class name="kt.Test1"/>
+            <!-- Suite execution failing - null pointer :
+                 ~ java.lang.NullPointerException: Cannot invoke "pages.BasePage.loginApp()" because "this.basePage" is null
+            issue -->
+            <class name="kt.LoginFeatureTest"/>
         </classes>
     </test>
 </suite>

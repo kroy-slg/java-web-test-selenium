@@ -23,9 +23,6 @@ public class BasePage {
     public void beforeSuite() {
         loginPage = new LoginPage(DriverManager.getDriver());
         DriverManager.getDriver().get(baseUrl);
-        loginPage.enterUserName();
-        loginPage.enterPassword();
-        loginPage.clickLogin();
     }
 
     @AfterSuite
@@ -33,6 +30,19 @@ public class BasePage {
         DriverManager.quitDriver();
     }
 
+    /**
+     * Method to login
+     */
+    public void loginApp(){
+        loginPage = new LoginPage(DriverManager.getDriver());
+        loginPage.enterUserName();
+        loginPage.enterPassword();
+        loginPage.clickLogin();
+    }
+
+    /**
+     * Method to verify isValid
+     */
     public boolean isValid() {
         WebElement element = pageRefObject;
         try {
