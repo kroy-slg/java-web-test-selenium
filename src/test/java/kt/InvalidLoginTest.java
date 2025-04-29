@@ -10,7 +10,7 @@ import pages.BasePage;
 import pages.LoginPage;
 import utils.DriverManager;
 
-public class LoginFeatureTest {
+public class InvalidLoginTest {
     WebDriver driver;
     LoginPage loginPage;
     BasePage basePage;
@@ -29,9 +29,9 @@ public class LoginFeatureTest {
 //        todo: Test Data setup for tc
     }
 
-    @Test(testName = "test to check login functionality", groups = {TestGroups.SHAKEOUT}, priority = 1)
+    @Test(testName = "test to check login functionality with wrong credentials", groups = {TestGroups.SHAKEOUT}, priority = 1)
     public void loginTest() {
-//        todo: logic for tc
+//        todo: logic for tc - not completed
         loginPage.loginApp();
         System.out.println("Login successfully");
     }

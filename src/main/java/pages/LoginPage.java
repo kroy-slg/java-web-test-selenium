@@ -32,4 +32,13 @@ public class LoginPage extends BasePage {
         WebElement loginButton = wait.until(ExpectedConditions.elementToBeClickable(By.tagName("button")));
         loginButton.click();
     }
+
+    /**
+     * Method to login
+     */
+    public void loginApp() {
+        this.enterUserName();
+        this.enterPassword();
+        this.clickLogin();
+    }
 }

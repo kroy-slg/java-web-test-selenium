@@ -2,16 +2,15 @@ package pages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 import utils.DriverManager;
 import java.util.logging.Logger;
 
 public class BasePage {
     protected WebDriver driver;
     protected WebElement pageRefObject;
-    LoginPage loginPage;
-    String baseUrl = "https://opensource-demo.orangehrmlive.com/";
+    BaseTest baseTest;
 
     private static final Logger logger = Logger.getLogger(BasePage.class.getName());
 
@@ -19,25 +18,15 @@ public class BasePage {
         this.driver = driver;
     }
 
-    @BeforeSuite
-    public void beforeSuite() {
-        loginPage = new LoginPage(DriverManager.getDriver());
-        DriverManager.getDriver().get(baseUrl);
+    @BeforeClass
+    public void beforeClass() {
+        baseTest = new BaseTest();
+        baseTest.beforeSuite();
     }
 
-    @AfterSuite
-    public void afterSuite() {
+    @AfterClass
+    public void afterClass() {
         DriverManager.quitDriver();
-    }
-
-    /**
-     * Method to login
-     */
-    public void loginApp(){
-        loginPage = new LoginPage(DriverManager.getDriver());
-        loginPage.enterUserName();
-        loginPage.enterPassword();
-        loginPage.clickLogin();
     }
 
     /**
