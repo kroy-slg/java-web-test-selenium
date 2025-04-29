@@ -1,40 +1,44 @@
 package pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
-import org.openqa.selenium.chrome.ChromeDriver;
+import utils.DriverManager;
+import java.util.logging.Logger;
 
 public class BasePage {
-    WebDriver driver;
-    String pageUrl = "https://opensource-demo.orangehrmlive.com/";
+    protected WebDriver driver;
+    protected WebElement pageRefObject;
+    BaseTest baseTest;
 
-    public WebElement userNameFieldSelector = driver.findElement(By.xpath("//*[@id='app']/div[1]/div/div[1]/div/div[2]/div[2]/form/div[1]/div/div[2]/input"));
-    public WebElement passwordFieldSelector = driver.findElement(By.xpath("//*[@id='app']/div[1]/div/div[1]/div/div[2]/div[2]/form/div[2]/div/div[2]/input"));
+    private static final Logger logger = Logger.getLogger(BasePage.class.getName());
 
-    public void enterUserName(){
-        userNameFieldSelector.sendKeys("Admin");
-    }
-    public void enterPassword(){
-        passwordFieldSelector.sendKeys("admin123");
+    public BasePage(WebDriver driver) {
+        this.driver = driver;
     }
 
-    @BeforeClass(alwaysRun = true)
-    public void beforeClass() throws InterruptedException {
-        driver = new ChromeDriver();
-        driver.get(pageUrl);
-        Thread.sleep(10000);
-        enterUserName();
-        Thread.sleep(5000);
-        enterPassword();
-        Thread.sleep(5000);
+    @BeforeClass
+    public void beforeClass() {
+        baseTest = new BaseTest();
+        baseTest.beforeSuite();
     }
 
-    @AfterClass(alwaysRun = true)
-    public void afterClass(){
-        driver.quit();
+    @AfterClass
+    public void afterClass() {
+        DriverManager.quitDriver();
     }
 
+    /**
+     * Method to verify isValid
+     */
+    public boolean isValid() {
+        WebElement element = pageRefObject;
+        try {
+            return (element != null && element.isDisplayed());
+        } catch (Exception e) {
+            logger.severe("Error while checking element validity: " + e.getMessage());
+            return false;
+        }
+    }
 }
